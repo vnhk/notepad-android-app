@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="title_activity_main_layout">MainLayout</string>
+    <string name="onlineTab">Web app</string>
+    <string name="offlineTab">Offline</string>
+    <string name="quickNotesTab">Quick Notes</string>
+    <string name="notepadNotesTab">Notepad</string>
+    <string name="calendarNotes">Calendar Notes</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
