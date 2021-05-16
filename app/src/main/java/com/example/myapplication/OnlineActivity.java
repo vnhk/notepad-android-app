@@ -6,9 +6,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class OnlineActivity extends AppCompatActivity {
+public class OnlineActivity extends NotepadNavigableActivity {
     private WebView notepadWebView;
 
     @Override

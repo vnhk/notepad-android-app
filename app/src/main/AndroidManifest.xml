@@ -10,9 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".OnlineActivity"></activity>
+        <activity android:name="com.example.myapplication.OnlineActivity"></activity>
+        <activity android:name="com.example.myapplication.OfflineActivity"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.myapplication.MainActivity"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -44,6 +44,9 @@ public abstract class NotepadNavigableActivity extends AppCompatActivity impleme
         if (item.getItemId() == R.id.nav_online) {
             Intent intent = new Intent(NotepadNavigableActivity.this, OnlineActivity.class);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.nav_offline) {
+            Intent intent = new Intent(NotepadNavigableActivity.this, OfflineActivity.class);
+            startActivity(intent);
         }
         return true;
     }
