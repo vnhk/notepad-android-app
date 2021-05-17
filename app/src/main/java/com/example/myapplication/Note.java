@@ -1,17 +1,32 @@
 package com.example.myapplication;
 
-public class ExampleItem {
+import java.io.Serializable;
+
+public class Note implements Serializable {
+    private String content;
+    private String plainContent;
     private int imageResource;
     private int id;
     private String header;
     private String secondary;
     private String tags;
+    private String persistInfoDisplay;
 
-    public ExampleItem(int imageResource, String header, String secondary) {
+
+    public Note(int imageResource, String header, String secondary) {
         this.imageResource = imageResource;
         this.header = header;
         this.secondary = secondary;
     }
+
+    public String getPlainContent() {
+        return plainContent;
+    }
+
+    public void setPlainContent(String plainContent) {
+        this.plainContent = plainContent;
+    }
+
 
     public int getId() {
         return id;
@@ -51,5 +66,21 @@ public class ExampleItem {
 
     public void setSecondary(String secondary) {
         this.secondary = secondary;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getPersistInfoDisplay() {
+        return persistInfoDisplay;
+    }
+
+    public void setPersistInfoDisplay(String persistInfoDisplay) {
+        this.persistInfoDisplay = persistInfoDisplay;
     }
 }

@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class OfflineActivity extends NotepadNavigableActivity {
     private ExampleAdapter adapter;
-    private List<ExampleItem> exampleList;
+    private List<Note> exampleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,32 +41,35 @@ public class OfflineActivity extends NotepadNavigableActivity {
     }
 
 
-    private List<ExampleItem> getNotes() {
+    private List<Note> getNotes() {
         exampleList = new ArrayList<>();
-        exampleList.add(new ExampleItem(R.drawable.icon_document, "Two", "Eleven"));
-        exampleList.add(new ExampleItem(R.drawable.icon_calendar_note, "Three", "Twelve"));
-        exampleList.add(new ExampleItem(R.drawable.icon_quick_note, "Four", "Thirteen"));
-        exampleList.add(new ExampleItem(R.drawable.icon_document, "Two", "Eleven"));
-        exampleList.add(new ExampleItem(R.drawable.icon_calendar_note, "Three", "Twelve"));
-        exampleList.add(new ExampleItem(R.drawable.icon_quick_note, "Four", "Thirteen"));
-        exampleList.add(new ExampleItem(R.drawable.icon_document, "Two", "Eleven"));
-        exampleList.add(new ExampleItem(R.drawable.icon_calendar_note, "Three", "Twelve"));
-        exampleList.add(new ExampleItem(R.drawable.icon_quick_note, "Four", "Thirteen"));
-        exampleList.add(new ExampleItem(R.drawable.icon_document, "Two", "Eleven"));
-        exampleList.add(new ExampleItem(R.drawable.icon_calendar_note, "Three", "Twelve"));
-        exampleList.add(new ExampleItem(R.drawable.icon_quick_note, "Four", "Thirteen"));
-        exampleList.add(new ExampleItem(R.drawable.icon_document, "Two", "Eleven"));
-        exampleList.add(new ExampleItem(R.drawable.icon_calendar_note, "Three", "Twelve"));
-        exampleList.add(new ExampleItem(R.drawable.icon_quick_note, "Four", "Thirteen"));
-        exampleList.add(new ExampleItem(R.drawable.icon_document, "Two", "Eleven"));
-        exampleList.add(new ExampleItem(R.drawable.icon_calendar_note, "Three", "Twelve"));
-        exampleList.add(new ExampleItem(R.drawable.icon_quick_note, "Four", "Thirteen"));
-        exampleList.add(new ExampleItem(R.drawable.icon_document, "Two", "Eleven"));
-        exampleList.add(new ExampleItem(R.drawable.icon_calendar_note, "Three", "Twelve"));
-        exampleList.add(new ExampleItem(R.drawable.icon_quick_note, "Four", "Thirteen"));
-        exampleList.add(new ExampleItem(R.drawable.icon_document, "Two", "Eleven"));
-        exampleList.add(new ExampleItem(R.drawable.icon_calendar_note, "Three", "Twelve"));
-        exampleList.add(new ExampleItem(R.drawable.icon_quick_note, "Four", "Thirteen"));
+        Note e = new Note(R.drawable.icon_document, "Two", "Eleven");
+        e.setContent("");
+        e.setSecondary("");
+        exampleList.add(e);
+        exampleList.add(new Note(R.drawable.icon_calendar_note, "Three", "Twelve"));
+        exampleList.add(new Note(R.drawable.icon_quick_note, "Four", "Thirteen"));
+        exampleList.add(new Note(R.drawable.icon_document, "Two", "Eleven"));
+        exampleList.add(new Note(R.drawable.icon_calendar_note, "Three", "Twelve"));
+        exampleList.add(new Note(R.drawable.icon_quick_note, "Four", "Thirteen"));
+        exampleList.add(new Note(R.drawable.icon_document, "Two", "Eleven"));
+        exampleList.add(new Note(R.drawable.icon_calendar_note, "Three", "Twelve"));
+        exampleList.add(new Note(R.drawable.icon_quick_note, "Four", "Thirteen"));
+        exampleList.add(new Note(R.drawable.icon_document, "Two", "Eleven"));
+        exampleList.add(new Note(R.drawable.icon_calendar_note, "Three", "Twelve"));
+        exampleList.add(new Note(R.drawable.icon_quick_note, "Four", "Thirteen"));
+        exampleList.add(new Note(R.drawable.icon_document, "Two", "Eleven"));
+        exampleList.add(new Note(R.drawable.icon_calendar_note, "Three", "Twelve"));
+        exampleList.add(new Note(R.drawable.icon_quick_note, "Four", "Thirteen"));
+        exampleList.add(new Note(R.drawable.icon_document, "Two", "Eleven"));
+        exampleList.add(new Note(R.drawable.icon_calendar_note, "Three", "Twelve"));
+        exampleList.add(new Note(R.drawable.icon_quick_note, "Four", "Thirteen"));
+        exampleList.add(new Note(R.drawable.icon_document, "Two", "Eleven"));
+        exampleList.add(new Note(R.drawable.icon_calendar_note, "Three", "Twelve"));
+        exampleList.add(new Note(R.drawable.icon_quick_note, "Four", "Thirteen"));
+        exampleList.add(new Note(R.drawable.icon_document, "Two", "Eleven"));
+        exampleList.add(new Note(R.drawable.icon_calendar_note, "Three", "Twelve"));
+        exampleList.add(new Note(R.drawable.icon_quick_note, "Four", "Thirteen"));
         return exampleList;
     }
 
@@ -82,9 +86,13 @@ public class OfflineActivity extends NotepadNavigableActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        adapter = new ExampleAdapter(exampleList);
+        adapter = new ExampleAdapter(exampleList, this);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+    }
+
+    public View getView() {
+        return findViewById(R.id.nav_layout);
     }
 }
