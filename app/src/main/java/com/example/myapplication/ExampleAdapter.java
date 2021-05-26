@@ -72,6 +72,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         holder.imageView.setImageResource(currentItem.getImageResource());
         holder.header.setText(currentItem.getHeader());
         holder.secondary.setText(currentItem.getSecondary());
+        holder.tags.setText(holder.tags.getText() + " " + currentItem.getTags());
         holder.id = position;
     }
 

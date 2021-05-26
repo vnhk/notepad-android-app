@@ -19,6 +19,10 @@ public class Note implements Serializable {
         this.secondary = secondary;
     }
 
+    public Note() {
+
+    }
+
     public String getPlainContent() {
         return plainContent;
     }

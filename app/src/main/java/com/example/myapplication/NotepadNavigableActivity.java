@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.myapplication.ui.login.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public abstract class NotepadNavigableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +47,9 @@ public abstract class NotepadNavigableActivity extends AppCompatActivity impleme
             startActivity(intent);
         } else if (item.getItemId() == R.id.nav_offline) {
             Intent intent = new Intent(NotepadNavigableActivity.this, OfflineActivity.class);
+            startActivity(intent);
+        }  else if (item.getItemId() == R.id.nav_login) {
+            Intent intent = new Intent(NotepadNavigableActivity.this, LoginActivity.class);
             startActivity(intent);
         }
         return true;

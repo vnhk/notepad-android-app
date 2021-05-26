@@ -19,6 +19,7 @@
             android:layout_height="60dp"
             android:contentDescription="back"
             android:padding="2dp"
+            android:tint="#5852FF"
             app:srcCompat="@drawable/icon_back" />
     </LinearLayout>
 
@@ -69,7 +70,7 @@
 
     <WebView
         android:id="@+id/web_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 
 </LinearLayout>
