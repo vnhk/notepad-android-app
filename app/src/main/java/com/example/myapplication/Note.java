@@ -1,8 +1,12 @@
 package com.example.myapplication;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class Note implements Serializable {
+    public static final String CALENDAR_NOTE = "CALENDAR_NOTE";
+    public static final String QUICK_NOTE = "QUICK_NOTE";
+    public static final String DOCUMENT = "DOCUMENT";
     private String content;
     private String plainContent;
     private int imageResource;
@@ -11,7 +15,8 @@ public class Note implements Serializable {
     private String secondary;
     private String tags;
     private String persistInfoDisplay;
-
+    private Timestamp modifyDate;
+    private String type;
 
     public Note(int imageResource, String header, String secondary) {
         this.imageResource = imageResource;
@@ -86,5 +91,21 @@ public class Note implements Serializable {
 
     public void setPersistInfoDisplay(String persistInfoDisplay) {
         this.persistInfoDisplay = persistInfoDisplay;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Timestamp getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Timestamp modifyDate) {
+        this.modifyDate = modifyDate;
     }
 }

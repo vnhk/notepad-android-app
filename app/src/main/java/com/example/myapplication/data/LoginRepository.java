@@ -19,6 +19,10 @@ public class LoginRepository {
     }
 
     public static LoginRepository getInstance(LoginDataSource dataSource) {
+        if (instance == null && dataSource == null) {
+            throw new IllegalArgumentException();
+        }
+
         if (instance == null) {
             instance = new LoginRepository(dataSource);
         }
