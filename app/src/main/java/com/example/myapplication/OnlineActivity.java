@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -8,13 +9,16 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.data.LoginRepository;
+import com.example.myapplication.ui.login.LoginActivity;
+
 public class OnlineActivity extends AppCompatActivity {
     private WebView notepadWebView;
+    public static boolean loginPerformed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +26,14 @@ public class OnlineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_online);
         notepadWebView = findViewById(R.id.web_view);
         notepadWebView.addJavascriptInterface(new WebInterface(this), "Android");
-
-        if (savedInstanceState == null) {
-            notepadWebView.loadUrl("https://noter-word-app.herokuapp.com/");
-            addListenerOnTheme();
-        }
-
-        notepadWebView.setWebViewClient(new NotepadWebView());
         notepadWebView.setWebChromeClient(new WebChromeClient());
+        notepadWebView.setWebViewClient(new NotepadWebView());
 
         WebSettings webSettings = notepadWebView.getSettings();
         setWebSettingsOptions(webSettings);
+        if (savedInstanceState == null) {
+            notepadWebView.loadUrl("https://noter-word-app.herokuapp.com/");
+        }
     }
 
     private void setWebSettingsOptions(WebSettings webSettings) {
@@ -40,8 +41,26 @@ public class OnlineActivity extends AppCompatActivity {
         webSettings.setDomStorageEnabled(true);
     }
 
-    private void addListenerOnTheme() {
-        notepadWebView.loadUrl("javascript:alert(1);");
+
+    public void setToken() {
+        if (loginPerformed) {
+
+            LoginRepository instance = LoginRepository.getInstance(null);
+
+            String token = instance.getUser().getToken().split("Bearer")[1].trim();
+
+            notepadWebView.post(() -> {
+                notepadWebView.loadUrl("javascript:setToken(\"" + token + "\");");
+                notepadWebView.loadUrl("https://noter-word-app.herokuapp.com/");
+            });
+
+            loginPerformed = false;
+        } else {
+            LoginRepository.getInstance(null).logout();
+            Intent intent = new Intent(OnlineActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
@@ -77,8 +96,8 @@ public class OnlineActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void showAlert() {
-            Toast.makeText(mContext, "This is being called from the interface", Toast.LENGTH_SHORT).show();
+        public void onLoginPageLoaded() {
+            setToken();
         }
 
         @JavascriptInterface
