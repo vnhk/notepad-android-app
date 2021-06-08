@@ -4,6 +4,7 @@ package com.example.myapplication;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
 import android.widget.SearchView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,8 +15,30 @@ import com.example.myapplication.reponotes.NoteSynchronizer;
 import java.util.List;
 
 public class OfflineActivity extends NotepadNavigableActivity {
-    private ExampleAdapter adapter;
+    private NoteFilterAdapter adapter;
     private List<Note> noteList;
+    private CheckBox documentCheckbox;
+    private CheckBox quickNotesCheckbox;
+    private CheckBox calendarNoteCheckbox;
+    private SearchView searchView;
+
+    public void setCheckboxListeners() {
+        documentCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            NoteFilterAdapter.checkedDocument = isChecked;
+            adapter.getFilter().filter(searchView.getQuery());
+        });
+
+        quickNotesCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            NoteFilterAdapter.checkedQuickNote = isChecked;
+            adapter.getFilter().filter(searchView.getQuery());
+        });
+
+        calendarNoteCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            NoteFilterAdapter.checkedCalendarNote = isChecked;
+            adapter.getFilter().filter(searchView.getQuery());
+        });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +46,7 @@ public class OfflineActivity extends NotepadNavigableActivity {
         fillExampleList();
         setUpRecyclerView();
 
-        SearchView searchView = findViewById(R.id.searchView);
+        searchView = findViewById(R.id.searchView);
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
@@ -39,6 +62,19 @@ public class OfflineActivity extends NotepadNavigableActivity {
                 return false;
             }
         });
+
+        documentCheckbox = findViewById(R.id.documentCheckbox);
+        quickNotesCheckbox = findViewById(R.id.quickNotesCheckbox);
+        calendarNoteCheckbox = findViewById(R.id.calendarNoteCheckbox);
+
+        setCheckboxListeners();
+
+        documentCheckbox.setChecked(true);
+        NoteFilterAdapter.checkedDocument = true;
+        quickNotesCheckbox.setChecked(true);
+        NoteFilterAdapter.checkedQuickNote = true;
+        calendarNoteCheckbox.setChecked(true);
+        NoteFilterAdapter.checkedCalendarNote = true;
     }
 
     private List<Note> getNotes() {
@@ -58,7 +94,7 @@ public class OfflineActivity extends NotepadNavigableActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        adapter = new ExampleAdapter(noteList, this);
+        adapter = new NoteFilterAdapter(noteList, this);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

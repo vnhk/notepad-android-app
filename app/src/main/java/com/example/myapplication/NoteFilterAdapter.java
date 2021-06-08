@@ -16,26 +16,44 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> implements Filterable {
+public class NoteFilterAdapter extends RecyclerView.Adapter<NoteFilterAdapter.ExampleViewHolder> implements Filterable {
     private final List<Note> exampleList;
     private final List<Note> exampleListFull;
     private final OfflineActivity activity;
-    private final Filter exampleFilter = new Filter() {
+    public static boolean checkedDocument;
+    public static boolean checkedQuickNote;
+    public static boolean checkedCalendarNote;
+    private final Filter notesFilter = new Filter() {
+
+
+        private boolean containsPattern(String value, String pattern) {
+            if (value == null) {
+                return false;
+            }
+
+            return value.toLowerCase().contains(pattern);
+        }
+
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Note> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(exampleListFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (Note item : exampleListFull) {
-                    if (item.getSecondary().toLowerCase().contains(filterPattern)) {
+            String filterPattern = "";
+            for (Note item : exampleListFull) {
+                if (isSelectedSearchForType(item)) {
+                    if (constraint == null || constraint.length() == 0) {
                         filteredList.add(item);
+                    } else {
+                        filterPattern = constraint.toString().toLowerCase().trim();
+
+                        if (containsPattern(item.getSecondary(), filterPattern) ||
+                                containsPattern(item.getHeader(), filterPattern) ||
+                                containsPattern(item.getTags(), filterPattern)) {
+                            filteredList.add(item);
+                        }
                     }
                 }
             }
+
 
             FilterResults results = new FilterResults();
             results.values = filteredList;
@@ -51,10 +69,16 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         }
     };
 
-    ExampleAdapter(List<Note> exampleList, OfflineActivity activity) {
+    NoteFilterAdapter(List<Note> exampleList, OfflineActivity activity) {
         this.exampleList = exampleList;
         exampleListFull = new ArrayList<>(exampleList);
         this.activity = activity;
+    }
+
+    private boolean isSelectedSearchForType(Note item) {
+        return checkedDocument && item.getType().equals(Note.DOCUMENT) ||
+                checkedQuickNote && item.getType().equals(Note.QUICK_NOTE) ||
+                checkedCalendarNote && item.getType().equals(Note.CALENDAR_NOTE);
     }
 
     @NonNull
@@ -83,7 +107,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
 
     @Override
     public Filter getFilter() {
-        return exampleFilter;
+        return notesFilter;
     }
 
     class ExampleViewHolder extends RecyclerView.ViewHolder {
