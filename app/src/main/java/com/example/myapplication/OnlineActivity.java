@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -24,6 +25,10 @@ public class OnlineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online);
+
+        ImageView backButton = findViewById(R.id.back);
+        backButton.setOnClickListener(v -> finish());
+
         notepadWebView = findViewById(R.id.web_view);
         notepadWebView.addJavascriptInterface(new WebInterface(this), "Android");
         notepadWebView.setWebChromeClient(new WebChromeClient());
@@ -56,6 +61,7 @@ public class OnlineActivity extends AppCompatActivity {
 
             loginPerformed = false;
         } else {
+            CookieManager.getInstance().removeAllCookie();
             LoginRepository.getInstance(null).logout();
             Intent intent = new Intent(OnlineActivity.this, LoginActivity.class);
             startActivity(intent);

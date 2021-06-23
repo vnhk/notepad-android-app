@@ -7,6 +7,7 @@ import android.util.Base64;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,9 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Note item = (Note) intent.getSerializableExtra("note");
+
+        ImageView backButton = findViewById(R.id.back);
+        backButton.setOnClickListener(v -> finish());
 
         header = findViewById(R.id.headerNote);
         secondary = findViewById(R.id.secondaryNote);
